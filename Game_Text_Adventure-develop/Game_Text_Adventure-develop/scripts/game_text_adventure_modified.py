@@ -297,6 +297,48 @@ lugares_disponibles = [
     }
 ]
 
+eventos_disponibles = {
+    "tesoro": evento_tesoro,
+    "trampa": evento_trampa,
+    "fuente mágica": evento_fuente_magica,
+    "mercader": evento_mercader,
+    "quest": evento_quest,
+    "vista panorámica": evento_vista_panoramica,
+    "santuario": evento_santuario
+}
+
+
+
+def explorar_lugar() -> None:
+    """
+    Permite al jugador explorar un lugar aleatorio, donde puede
+    encontrar un enemigo o un evento especial.
+    """
+    lugar_actual = random.choice(lugares_disponibles)
+
+    print(f"\nHas llegado a: {lugar_actual['nombre']}")
+    print(lugar_actual["descripcion"])
+
+    encontro_enemigo = random.random() < 0.7
+
+    if encontro_enemigo:
+        enemigo = random.choice(lugar_actual["enemigos"])
+        combate(enemigo)
+    else:
+        evento = random.choice(lugar_actual["eventos"])
+        eventos_disponibles[evento]()  # Llama la función correspondiente
+
+
+
+
+
+
+
+
+
+
+
+
 
 print("¡Bienvenido al Juego de Aventuras de Texto!")
 jugador["nombre"] = input("Ingresa el nombre de tu personaje: ")
