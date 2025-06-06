@@ -23,11 +23,85 @@ def mostrar_estado() -> None:
     Muestra el estado actual del jugador.
     """
 
-    print(f"\n{jugador['nombre']}, estás en el nivel {jugador['nivel']}.")
+    print(f"\n{jugador["nombre']}, estás en el nivel {jugador['nivel']}.")
     print(
         f"vida: {jugador['vida']}/{jugador['vida_maxima']} | "
         f"Oro: {jugador['oro']} | Experiencia: {jugador['experiencia']}"
     )
+
+def atacar_jugador(enemigo: dict) -> None:
+    """
+    Calcula el daño que el enemigo inflige al jugador.
+
+    Args:
+        enemigo (dict): Datos del enemigo que ataca.
+    """
+
+    daño_recibido = random.randint(enemigo["ataque"] - 5, enemigo["ataque"] + 5)
+    jugador["vida"] -= daño_recibido
+    print(f"El {enemigo['nombre']} te ha infligido {daño_recibido} puntos de daño.")
+
+def subir_nivel() -> None:
+    """
+    Verifica si el jugador ha acumulado suficiente experiencia para subir de nivel.
+    Si es así, actualiza nivel, vida máxima y restaura la vida.
+    """
+
+    experiencia_necesaria = jugador["nivel"] * 100
+
+    if jugador["experiencia"] >= experiencia_necesaria:
+        jugador["nivel"] += 1
+        jugador["vida_maxima"] += 20
+        jugador["vida"] = jugador["vida_maxima"]
+        jugador["experiencia"] = 0
+        print(
+            f"¡Has subido al nivel {jugador['nivel']}! "
+            f"Tu vida máxima ha aumentado a {jugador['vida_maxima']}."
+        )
+
+def combate(enemigo: dict) -> None:
+    """
+    Ejecuta el ciclo de combate entre el jugador y el enemigo.
+
+    Args:
+        enemigo (dict): Diccionario con las estadísticas del enemigo.
+    """
+
+    print(f"\n¡Te enfrentas a un {enemigo['nombre']}!")
+
+    while enemigo["vida"] > 0 and jugador["vida"] > 0:
+        accion_combate = input("¿Qué quieres hacer? (atacar/huir): ").strip().lower()
+
+        if accion_combate == "atacar":
+            daño_jugador = random.randint(5, 15) + jugador["nivel"] * 2
+            enemigo["vida"] -= daño_jugador
+
+            print(
+                f"Has infligido {daño_jugador} puntos de daño al {enemigo['nombre']}."
+            )
+
+            if enemigo["vida"] <= 0:
+                print(f"¡Has derrotado al {enemigo['nombre']}!")
+                jugador["experiencia"] += enemigo["experiencia"]
+                jugador["oro"] += enemigo["oro"]
+                print(
+                    f"Ganaste {enemigo['experiencia']} de experiencia y "
+                    f"{enemigo['oro']} de oro."
+                )
+                subir_nivel()
+            else:
+                atacar_jugador(enemigo)
+
+        elif accion_combate == "huir":
+            if random.random() < 0.5:
+                print("Has logrado escapar.")
+                break
+            else:
+                print("No has podido escapar.")
+                atacar_jugador(enemigo)
+        else:
+            print("Acción no válida. Pierdes tu turno.")
+
 
 
 lugares = [
