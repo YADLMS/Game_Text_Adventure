@@ -202,9 +202,64 @@ def evento_santuario() -> None:
         jugador["experiencia"] += 20
         print("Ya conocías la habilidad del santuario. Ganas 20 puntos de experiencia.")
 
-            
-            
+# Funciones relacionadas con exploracion
+ def explorar_lugar() -> None:
+    """
+    Permite al jugador explorar un lugar aleatorio, donde puede
+    encontrar un enemigo o un evento especial.
+    """
 
+    lugar_actual = random.choice(lugares_disponibles)
+
+    print(f"\nHas llegado a: {lugar_actual['nombre']}")
+    print(lugar_actual["descripcion"])
+
+    encontro_enemigo = random.random() < 0.7
+
+    if encontro_enemigo:
+        enemigo = random.choice(lugar_actual["enemigos"])
+        combate(enemigo)
+    else:
+        evento = random.choice(lugar_actual["eventos"])
+        eventos_disponibles[evento]()  # Llama la función correspondiente       
+
+def mostrar_inventario() -> None:
+    """
+    Muestra los objetos que el jugador tiene en el inventario y
+    permite usar una poción si está disponible.
+    """
+
+    if not jugador["inventario"]:
+        print("\nTu inventario está vacío.")
+        return
+
+    print("\nTu inventario:")
+    for objeto in jugador["inventario"]:
+        print(f"- {objeto}")
+
+    if "Poción de vida" in jugador["inventario"]:
+        usar = input("¿Quieres usar una poción de vida? (si/no): ").strip().lower()
+
+        if usar in ["si", "sí", "s"]:
+            jugador["inventario"].remove("Poción de vida")
+            cantidad_curar = 50
+            jugador["vida"] = min(
+                jugador["vida"] + cantidad_curar, jugador["vida_maxima"]
+            )
+            print(f"Has usado una poción de vida. Te curas {cantidad_curar} puntos de vida.")
+
+def descansar() -> None:
+    """
+    Permite al jugador recuperar algo de vida al descansar.
+    """
+
+    puntos_curar = random.randint(10, 20)
+    jugador["vida"] = min(jugador["vida"] + puntos_curar, jugador["vida_maxima"])
+    print(f"Has descansado y recuperado {puntos_curar} puntos de vida.")
+    time.sleep(1)
+        
+            
+# Lista de lugares y enemigos
 lugares_disponibles = [
     {
         "nombre": "Bosque Oscuro",
@@ -297,6 +352,7 @@ lugares_disponibles = [
     }
 ]
 
+#Diccionario de eventos
 eventos_disponibles = {
     "tesoro": evento_tesoro,
     "trampa": evento_trampa,
@@ -306,29 +362,6 @@ eventos_disponibles = {
     "vista panorámica": evento_vista_panoramica,
     "santuario": evento_santuario
 }
-
-
-
-def explorar_lugar() -> None:
-    """
-    Permite al jugador explorar un lugar aleatorio, donde puede
-    encontrar un enemigo o un evento especial.
-    """
-    lugar_actual = random.choice(lugares_disponibles)
-
-    print(f"\nHas llegado a: {lugar_actual['nombre']}")
-    print(lugar_actual["descripcion"])
-
-    encontro_enemigo = random.random() < 0.7
-
-    if encontro_enemigo:
-        enemigo = random.choice(lugar_actual["enemigos"])
-        combate(enemigo)
-    else:
-        evento = random.choice(lugar_actual["eventos"])
-        eventos_disponibles[evento]()  # Llama la función correspondiente
-
-
 
 
 
