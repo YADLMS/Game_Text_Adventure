@@ -18,6 +18,7 @@ jugador = {
     "habilidades": ["Ataque básico"]
 }
 
+# Funciones auxiliares
 def mostrar_estado() -> None:
     """
     Muestra el estado actual del jugador.
@@ -102,7 +103,107 @@ def combate(enemigo: dict) -> None:
         else:
             print("Acción no válida. Pierdes tu turno.")
 
+# Funciones de eventos aleatorios
+def evento_tesoro() -> None:
+    """
+    Evento donde el jugador encuentra un tesoro y gana oro.
+    """
+    oro_encontrado = random.randint(10, 50)
+    jugador["oro"] += oro_encontrado
+    print(f"¡Has encontrado un tesoro! Ganas {oro_encontrado} de oro.")
 
+
+
+def evento_trampa() -> None:
+    """
+    Evento donde el jugador cae en una trampa y pierde vida.
+    """
+    daño_trampa = random.randint(5, 15)
+    jugador["vida"] -= daño_trampa
+    print(f"¡Has caído en una trampa! Pierdes {daño_trampa} puntos de vida.")
+
+
+
+def evento_fuente_magica() -> None:
+    """
+    Evento donde el jugador se cura gracias a una fuente mágica.
+    """
+    curacion = random.randint(20, 40)
+    jugador["vida"] = min(jugador["vida"] + curacion, jugador["vida_maxima"])
+    print(f"Has encontrado una fuente mágica. Te curas {curacion} puntos de vida.")
+
+
+
+def evento_mercader() -> None:
+    """
+    Evento donde el jugador encuentra un mercader y puede comprar una poción.
+    """
+    print("Te encuentras con un mercader ambulante.")
+
+    if jugador["oro"] >= 50:
+        decision = input(
+            "¿Quieres comprar una poción de vida por 50 de oro? (si/no): "
+        ).strip().lower()
+
+        if decision in ["si", "sí", "s"]:
+            jugador["oro"] -= 50
+            jugador["inventario"].append("Poción de vida")
+            print("Has comprado una poción de vida.")
+        else:
+            print("Decides no comprar nada.")
+    else:
+        print("No tienes suficiente oro para comprar.")
+
+
+
+def evento_quest() -> None:
+    """
+    Evento donde el jugador puede ayudar a un aldeano a encontrar un objeto.
+    """
+    print("Un aldeano te pide ayuda para encontrar un objeto perdido.")
+    decision = input("¿Quieres ayudarlo? (si/no): ").strip().lower()
+
+    if decision in ["si", "sí", "s"]:
+        if random.random() < 0.6:
+            recompensa = random.randint(30, 80)
+            jugador["oro"] += recompensa
+            print(
+                f"¡Has encontrado el objeto! El aldeano te recompensa con "
+                f"{recompensa} de oro."
+            )
+        else:
+            print("No logras encontrar el objeto. El aldeano se decepciona.")
+    else:
+        print("Decides no ayudar al aldeano.")
+
+
+
+def evento_vista_panoramica() -> None:
+    """
+    Evento donde el jugador contempla el paisaje y gana experiencia.
+    """
+    print("Disfrutas de una vista impresionante. Te sientes renovado.")
+    jugador["experiencia"] += 10
+    print("Ganas 10 puntos de experiencia.")
+
+
+
+def evento_santuario() -> None:
+    """
+    Evento donde el jugador encuentra un santuario y obtiene una habilidad.
+    """
+    print("Encuentras un antiguo santuario. Sientes una presencia mística.")
+    nueva_habilidad = "Bendición divina"
+
+    if nueva_habilidad not in jugador["habilidades"]:
+        jugador["habilidades"].append(nueva_habilidad)
+        print(f"Has aprendido una nueva habilidad: {nueva_habilidad}")
+    else:
+        jugador["experiencia"] += 20
+        print("Ya conocías la habilidad del santuario. Ganas 20 puntos de experiencia.")
+
+            
+            
 
 lugares_disponibles = [
     {
