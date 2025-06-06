@@ -104,43 +104,98 @@ def combate(enemigo: dict) -> None:
 
 
 
-lugares = [
+lugares_disponibles = [
     {
         "nombre": "Bosque Oscuro",
-        "descripcion": "Te encuentras en un bosque denso y oscuro. Los árboles bloquean la luz del sol.",
+        "descripcion": (
+            "Te encuentras en un bosque denso y oscuro. "
+            "Los árboles bloquean la luz del sol."
+        ),
         "enemigos": [
-            {"nombre": "Lobo", "vida": 30, "ataque": 10, "experiencia": 20, "oro": 5},
-            {"nombre": "Bandido", "vida": 40, "ataque": 15, "experiencia": 30, "oro": 10}
+            {
+                "nombre": "Lobo",
+                "vida": 30,
+                "ataque": 10,
+                "experiencia": 20,
+                "oro": 5
+            },
+            {
+                "nombre": "Bandido",
+                "vida": 40,
+                "ataque": 15,
+                "experiencia": 30,
+                "oro": 10
+            }
         ],
         "eventos": ["tesoro", "trampa"]
     },
     {
         "nombre": "Cueva Profunda",
-        "descripcion": "Entras en una cueva húmeda y fría. Escuchas goteos en la distancia.",
+        "descripcion": (
+            "Entras en una cueva húmeda y fría. "
+            "Escuchas goteos en la distancia."
+        ),
         "enemigos": [
-            {"nombre": "Murciélago Gigante", "vida": 25, "ataque": 8, "experiencia": 15, "oro": 3},
-            {"nombre": "Trol", "vida": 60, "ataque": 20, "experiencia": 50, "oro": 20}
+            {
+                "nombre": "Murciélago Gigante",
+                "vida": 25,
+                "ataque": 8,
+                "experiencia": 15,
+                "oro": 3
+            },
+            {
+                "nombre": "Trol",
+                "vida": 60,
+                "ataque": 20,
+                "experiencia": 50,
+                "oro": 20
+            }
         ],
         "eventos": ["tesoro", "fuente mágica"]
     },
     {
         "nombre": "Aldea Abandonada",
-        "descripcion": "Llegas a una aldea desierta. Las casas parecen haber sido abandonadas hace tiempo.",
+        "descripcion": (
+            "Llegas a una aldea desierta. "
+            "Las casas parecen haber sido abandonadas hace tiempo."
+        ),
         "enemigos": [
-            {"nombre": "Fantasma", "vida": 35, "ataque": 12, "experiencia": 25, "oro": 8}
+            {
+                "nombre": "Fantasma",
+                "vida": 35,
+                "ataque": 12,
+                "experiencia": 25,
+                "oro": 8
+            }
         ],
         "eventos": ["mercader", "quest"]
     },
     {
         "nombre": "Cima de la Montaña",
-        "descripcion": "Alcanzas la cima de una montaña escarpada. El aire es frío y delgado aquí.",
+        "descripcion": (
+            "Alcanzas la cima de una montaña escarpada. "
+            "El aire es frío y delgado aquí."
+        ),
         "enemigos": [
-            {"nombre": "Águila Gigante", "vida": 45, "ataque": 18, "experiencia": 35, "oro": 15},
-            {"nombre": "Yeti", "vida": 70, "ataque": 25, "experiencia": 60, "oro": 25}
+            {
+                "nombre": "Águila Gigante",
+                "vida": 45,
+                "ataque": 18,
+                "experiencia": 35,
+                "oro": 15
+            },
+            {
+                "nombre": "Yeti",
+                "vida": 70,
+                "ataque": 25,
+                "experiencia": 60,
+                "oro": 25
+            }
         ],
         "eventos": ["vista panorámica", "santuario"]
     }
 ]
+
 
 print("¡Bienvenido al Juego de Aventuras de Texto!")
 jugador["nombre"] = input("Ingresa el nombre de tu personaje: ")
